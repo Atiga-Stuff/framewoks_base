@@ -503,12 +503,15 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     private void setPercentTextAtCurrentLevel() {
         if (mBatteryPercentView != null) {
             mEstimateText = null;
+            String bolt = "\u26A1\uFE0E";
             String percentText = NumberFormat.getPercentInstance().format(mLevel / 100f);
+            CharSequence mChargeIndicator = isCharging() && (getBatteryStyle() == BATTERY_STYLE_TEXT || getBatteryStyle() == BATTERY_STYLE_HIDDEN)
+                ? (bolt + " ") : "";
             // Setting text actually triggers a layout pass (because the text view is set to
             // wrap_content width and TextView always relayouts for this). Avoid needless
             // relayout if the text didn't actually change.
             if (!TextUtils.equals(mBatteryPercentView.getText(), percentText)) {
-                mBatteryPercentView.setText(percentText);
+                mBatteryPercentView.setText(mChargeIndicator + percentText);
             }
         }
 
