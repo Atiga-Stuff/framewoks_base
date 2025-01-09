@@ -72,6 +72,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     protected static final int BATTERY_STYLE_PORTRAIT = 0;
     protected static final int BATTERY_STYLE_CIRCLE = 1;
     protected static final int BATTERY_STYLE_TEXT = 2;
+    protected static final int BATTERY_STYLE_HIDDEN = 3;
 
     @Retention(SOURCE)
     @IntDef({MODE_DEFAULT, MODE_ON, MODE_OFF, MODE_ESTIMATE})
@@ -612,10 +613,10 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 addPercentView(inflatePercentView());
                 updatePercentText();
             }
-            if (getBatteryStyle() == BATTERY_STYLE_TEXT) {
+            if (getBatteryStyle() == BATTERY_STYLE_TEXT || getBatteryStyle() == BATTERY_STYLE_HIDDEN) {
                 int rightPadding = getClockPosition() != CLOCK_RIGHT ? 0 :
                          getContext().getResources().getDimensionPixelSize(R.dimen.status_bar_battery_end_padding_bolt);
-                 mBatteryPercentView.setPaddingRelative(0, 0, 0, rightPadding);
+                mBatteryPercentView.setPaddingRelative(0, 0, 0, rightPadding);
             } else {
                 Resources res = getContext().getResources();
                 mBatteryPercentView.setPaddingRelative(
@@ -747,6 +748,10 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 mBatteryIconView.setVisibility(View.VISIBLE);
                 break;
             case BATTERY_STYLE_TEXT:
+                mBatteryIconView.setVisibility(View.GONE);
+                mBatteryIconView.setImageDrawable(null);
+                break;
+            case BATTERY_STYLE_HIDDEN:
                 mBatteryIconView.setVisibility(View.GONE);
                 mBatteryIconView.setImageDrawable(null);
                 break;
