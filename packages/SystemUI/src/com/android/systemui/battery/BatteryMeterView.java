@@ -280,6 +280,12 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
 
             setBatteryDrawableState(newState);
         }
+
+        if (!isCharging() && getBatteryStyle() == BATTERY_STYLE_HIDDEN) {
+            removeView(mBatteryPercentView);
+            mBatteryPercentView = null;
+            updateShowPercent();
+        }
     }
 
     // Potentially reloads any attribution. Should not be called if the state hasn't changed
