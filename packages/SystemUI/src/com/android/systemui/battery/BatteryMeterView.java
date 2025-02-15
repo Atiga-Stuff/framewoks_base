@@ -111,6 +111,8 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     private BatteryDrawableState mUnifiedBatteryState =
             BatteryDrawableState.Companion.getDefaultInitialState();
 
+    protected static final int CLOCK_RIGHT = 2;
+
     public BatteryMeterView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -597,7 +599,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 getBatteryStyle() == BATTERY_STYLE_TEXT);
         shouldShow = shouldShow && !mBatteryStateUnknown;
 
-        if (shouldShow) {
+        if (shouldShow || (isCharging() && getBatteryStyle() == BATTERY_STYLE_HIDDEN)) {
             mAccessorizedDrawable.showPercent(false);
             mCircleDrawable.setShowPercent(false);
             if (!showing) {
@@ -605,7 +607,9 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 updatePercentText();
             }
             if (getBatteryStyle() == BATTERY_STYLE_TEXT) {
-                mBatteryPercentView.setPaddingRelative(0, 0, 0, 0);
+                int rightPadding = getClockPosition() != CLOCK_RIGHT ? 0 :
+                         getContext().getResources().getDimensionPixelSize(R.dimen.status_bar_battery_end_padding_bolt);
+                 mBatteryPercentView.setPaddingRelative(0, 0, 0, rightPadding);
             } else {
                 Resources res = getContext().getResources();
                 mBatteryPercentView.setPaddingRelative(
@@ -748,6 +752,11 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 LineageSettings.System.STATUS_BAR_BATTERY_STYLE, BATTERY_STYLE_PORTRAIT,
                 UserHandle.USER_CURRENT);
     }
+
+    private int getClockPosition() {
+         return LineageSettings.System.getIntForUser(getContext().getContentResolver(),
+                 LineageSettings.System.STATUS_BAR_CLOCK, 0, UserHandle.USER_CURRENT);
+     }
 
     @Override
     public void onDarkChanged(ArrayList<Rect> areas, float darkIntensity, int tint) {

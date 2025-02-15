@@ -948,6 +948,7 @@
 
     <!-- end padding for battery icon in status bar -->
     <dimen name="status_bar_battery_end_padding">0dp</dimen>
+    <dimen name="status_bar_battery_end_padding_bolt">6dp</dimen>
 
     <!-- Screen pinning request width -->
     <dimen name="screen_pinning_request_width">@dimen/match_parent</dimen>
