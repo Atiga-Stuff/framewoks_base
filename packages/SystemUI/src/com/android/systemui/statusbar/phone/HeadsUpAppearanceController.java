@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.widget.ViewClippingUtil;
+import com.android.systemui.atigaos.logo.LogoImage;
 import com.android.systemui.dagger.qualifiers.RootView;
 import com.android.systemui.flags.FeatureFlagsClassic;
 import com.android.systemui.plugins.DarkIconDispatcher;
@@ -94,6 +95,8 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
     private final View mClockView;
     private final Optional<View> mOperatorNameViewOptional;
 
+    private final LogoImage mLogoImage;
+
     @VisibleForTesting
     float mExpandedHeight;
     @VisibleForTesting
@@ -155,6 +158,7 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
         mOperatorNameViewOptional = operatorNameViewOptional;
         mDarkIconDispatcher = darkIconDispatcher;
         mClockController = statusBarViewController.getClockController();
+        mLogoImage = statusBarView.findViewById(R.id.statusbar_logo);
 
         mView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -260,7 +264,9 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
                     hide(mClockView, View.INVISIBLE);
                 }
                 mOperatorNameViewOptional.ifPresent(view -> hide(view, View.INVISIBLE));
+                mLogoImage.setVisibility(View.INVISIBLE);
             } else {
+                mLogoImage.setVisibility(View.VISIBLE);
                 if (!isRightClock) {
                     show(mClockView);
                 }
