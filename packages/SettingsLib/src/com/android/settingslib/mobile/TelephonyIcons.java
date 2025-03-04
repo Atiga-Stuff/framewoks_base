@@ -29,8 +29,8 @@ public class TelephonyIcons {
     //***** Data connection icons
     public static final int FLIGHT_MODE_ICON = R.drawable.stat_sys_airplane_mode;
 
-    public static final int ICON_LTE = R.drawable.ic_lte_mobiledata;
-    public static final int ICON_LTE_PLUS = R.drawable.ic_lte_plus_mobiledata;
+    public static final int ICON_LTE = R.drawable.ic_a3_4g_mobiledata;
+    public static final int ICON_LTE_PLUS = R.drawable.ic_a3_4g_plus_mobiledata;
     public static final int ICON_G = R.drawable.ic_g_mobiledata;
     public static final int ICON_E = R.drawable.ic_e_mobiledata;
     public static final int ICON_H = R.drawable.ic_h_mobiledata;
